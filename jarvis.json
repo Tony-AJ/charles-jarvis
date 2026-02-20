@@ -1,0 +1,150 @@
+{
+  "name": "Jarvis Automation",
+  "nodes": [
+    {
+      "id": "1",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [200, 300],
+      "parameters": {
+        "path": "Jarvis",
+        "httpMethod": "POST",
+        "responseMode": "responseNode"
+      }
+    },
+    {
+      "id": "2",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [450, 300],
+      "parameters": {
+        "mode": "rules",
+        "rules": {
+          "rules": [
+            {
+              "output": 0,
+              "conditions": {
+                "all": [
+                  {
+                    "fact": "={{$json.workflow}}",
+                    "operator": "equal",
+                    "value": "start_server"
+                  }
+                ]
+              }
+            },
+            {
+              "output": 1,
+              "conditions": {
+                "all": [
+                  {
+                    "fact": "={{$json.workflow}}",
+                    "operator": "equal",
+                    "value": "stop_server"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "3",
+      "name": "Start Server",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [700, 200],
+      "parameters": {
+        "command": "npm run dev"
+      }
+    },
+    {
+      "id": "4",
+      "name": "Stop Server",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [700, 400],
+      "parameters": {
+        "command": "pkill node"
+      }
+    },
+    {
+      "id": "5",
+      "name": "Respond Start",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [950, 200],
+      "parameters": {
+        "responseBody": "{\"status\":\"success\",\"message\":\"Server started successfully\"}"
+      }
+    },
+    {
+      "id": "6",
+      "name": "Respond Stop",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [950, 400],
+      "parameters": {
+        "responseBody": "{\"status\":\"success\",\"message\":\"Server stopped successfully\"}"
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Start Server",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Stop Server",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start Server": {
+      "main": [
+        [
+          {
+            "node": "Respond Start",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stop Server": {
+      "main": [
+        [
+          {
+            "node": "Respond Stop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {},
+  "active": true
+}

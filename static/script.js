@@ -13,6 +13,7 @@ let stream = null;
 
 // Initialize Speech Recognition
 if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+    console.log("Speech Recognition API found.");
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     recognition = new SpeechRecognition();
     recognition.continuous = false;
@@ -21,15 +22,24 @@ if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
 
     recognition.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
+        console.log("Speech Recognition Result:", transcript);
         userInput.value = transcript;
         sendMessage();
     };
 
+    recognition.onstart = () => {
+        console.log("Speech Recognition started.");
+    };
+
     recognition.onend = () => {
+        console.log("Speech Recognition ended.");
         if (isVoiceEnabled || isVideoCallActive) {
             // Restart if still in voice mode
             setTimeout(() => {
-                if (isVoiceEnabled || isVideoCallActive) recognition.start();
+                if (isVoiceEnabled || isVideoCallActive) {
+                    console.log("Restarting Speech Recognition...");
+                    try { recognition.start(); } catch(e) { console.error("Restart error:", e); }
+                }
             }, 500);
         }
     };
@@ -41,22 +51,60 @@ if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
             updateVoiceUI();
         }
     };
+} else {
+    console.warn("Speech Recognition API NOT supported in this browser.");
 }
 
 function speak(text) {
-    if (!window.speechSynthesis) return;
+    if (!window.speechSynthesis) {
+        console.warn("Speech Synthesis NOT supported.");
+        return;
+    }
+    
+    console.log("Jarvis is speaking:", text);
     
     // Stop any ongoing speech
     window.speechSynthesis.cancel();
     
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = 1.0;
-    utterance.pitch = 0.9; // Slightly deeper for Jarvis
     
-    // Find a good voice (preferably male/UK if available)
+    // Jarvis-like parameters
+    utterance.rate = 1.05; // Slightly faster, crisp
+    utterance.pitch = 0.85; // Slightly deeper, sophisticated
+    utterance.volume = 1.0;
+    
+    // Find a good voice (prioritize British Male)
     const voices = window.speechSynthesis.getVoices();
-    const jarvisVoice = voices.find(v => v.name.includes('Google UK English Male') || v.name.includes('Male'));
-    if (jarvisVoice) utterance.voice = jarvisVoice;
+    console.log(`System has ${voices.length} voices available.`);
+    
+    // Specific targets for Jarvis vibe
+    const targetVoices = [
+        'Google UK English Male',
+        'Microsoft George - English (United Kingdom)',
+        'Microsoft Hazel - English (United Kingdom)',
+        'en-GB',
+        'Male'
+    ];
+
+    let selectedVoice = null;
+    for (const target of targetVoices) {
+        selectedVoice = voices.find(v => v.name.includes(target) || v.lang.includes(target));
+        if (selectedVoice) {
+            console.log("Selected voice:", selectedVoice.name);
+            break;
+        }
+    }
+
+    if (selectedVoice) {
+        utterance.voice = selectedVoice;
+    } else {
+        // Fallback to any British voice
+        selectedVoice = voices.find(v => v.lang.startsWith('en-GB')) || voices[0];
+        if (selectedVoice) {
+            console.log("Fallback voice:", selectedVoice.name);
+            utterance.voice = selectedVoice;
+        }
+    }
 
     window.speechSynthesis.speak(utterance);
 }

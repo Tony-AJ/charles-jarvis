@@ -1,0 +1,12 @@
+{
+  "name": "jarvis-assistant",
+  "version": "1.0.0",
+  "description": "Jarvis AI Assistant with n8n integration",
+  "main": "main.py",
+  "scripts": {
+    "dev": "python main.py",
+    "start": "python main.py"
+  },
+  "author": "Tony",
+  "license": "ISC"
+}

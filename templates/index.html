@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARVIS - Assistant</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-overlay"></div>
+    <div class="jarvis-container">
+        <header>
+            <div class="logo">JARVIS</div>
+            <div class="system-status">SYSTEM ONLINE</div>
+        </header>
+
+        <div class="main-display">
+            <div class="visualizer">
+                <div class="circle circle-1"></div>
+                <div class="circle circle-2"></div>
+                <div class="circle circle-3"></div>
+                <div class="core"></div>
+            </div>
+            
+            <div id="chat-box" class="chat-box">
+                <div class="message jarvis">Welcome, Tony. Systems are at 100%. How can I assist you today?</div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="input-area">
+                <input type="text" id="user-input" placeholder="Type a command or ask a question..." autocomplete="off">
+                <button id="send-btn">TRANSIMIT</button>
+            </div>
+        </footer>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>

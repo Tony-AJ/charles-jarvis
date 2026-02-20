@@ -29,11 +29,39 @@
         </div>
 
         <footer>
+            <div class="controls">
+                <button id="voice-toggle-btn" class="icon-btn" title="Voice Mode">
+                    <span class="icon">🎙️</span>
+                </button>
+                <button id="video-call-btn" class="icon-btn" title="Video Call">
+                    <span class="icon">📹</span>
+                </button>
+            </div>
             <div class="input-area">
                 <input type="text" id="user-input" placeholder="Type a command or ask a question..." autocomplete="off">
-                <button id="send-btn">TRANSIMIT</button>
+                <button id="send-btn">TRANSMIT</button>
             </div>
         </footer>
+    </div>
+
+    <!-- Video Call Overlay -->
+    <div id="video-overlay" class="video-overlay hidden">
+        <div class="video-container">
+            <video id="local-video" autoplay playsinline muted></video>
+            <div class="ai-presence">
+                <div class="visualizer large">
+                    <div class="circle circle-1"></div>
+                    <div class="circle circle-2"></div>
+                    <div class="circle circle-3"></div>
+                    <div class="core pulsing"></div>
+                </div>
+                <div class="ai-status">JARVIS CONNECTED</div>
+            </div>
+            <div class="video-controls">
+                <button id="mute-btn" class="control-btn">MUTE</button>
+                <button id="end-call-btn" class="control-btn end-call">END CALL</button>
+            </div>
+        </div>
     </div>
     <script src="/static/script.js"></script>
 </body>

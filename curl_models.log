@@ -1,0 +1,53 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying 10.126.233.165:1234...
+* Connected to 10.126.233.165 (10.126.233.165) port 1234
+* using HTTP/1.x
+> GET /v1/models HTTP/1.1
+> Host: 10.126.233.165:1234
+> User-Agent: curl/8.15.0
+> Accept: */*
+> 
+* Request completely sent off
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 635
+< ETag: W/"27b-zwKB0vcDFrxPO6IbBwZOyIDzKzc"
+< Date: Fri, 20 Feb 2026 20:49:47 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+< 
+{ [635 bytes data]
+100   635  100   635    0     0   3084      0 --:--:-- --:--:-- --:--:--  3097
+* Connection #0 to host 10.126.233.165 left intact
+{
+  "data": [
+    {
+      "id": "mistralai/ministral-3-3b",
+      "object": "model",
+      "owned_by": "organization_owner"
+    },
+    {
+      "id": "mistralai/ministral-3-3b-instruct-2512",
+      "object": "model",
+      "owned_by": "organization_owner"
+    },
+    {
+      "id": "qwen/qwen3-4b-2507",
+      "object": "model",
+      "owned_by": "organization_owner"
+    },
+    {
+      "id": "qwen/qwen3-vl-4b",
+      "object": "model",
+      "owned_by": "organization_owner"
+    },
+    {
+      "id": "text-embedding-nomic-embed-text-v1.5",
+      "object": "model",
+      "owned_by": "organization_owner"
+    }
+  ],
+  "object": "list"
+}

@@ -4,6 +4,9 @@ const videoOverlay = document.getElementById('video-overlay');
 const localVideo = document.getElementById('local-video');
 const endCallBtn = document.getElementById('end-call-btn');
 const muteBtn = document.getElementById('mute-btn');
+const userInput = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+const chatBox = document.getElementById('chat-box');
 
 let history = [];
 let isVoiceEnabled = false;
